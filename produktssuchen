@@ -1,0 +1,23 @@
+<?php
+
+//bindet die Datei dbverbindung.php und führt sie aus
+require("datenbankverbunden.php");
+// Session wird erstellt
+session_start();
+// Sql Befehl um das gesuchte Produkt anzuzeigen
+$sql = ("SELECT  `name` FROM produkt WHERE name
+LIKE '%".$_REQUEST['term']."%' ");
+foreach ($db->query($sql) as $row):
+
+//SQl Befehl ausführen
+$query = mysqli_query($db,$sql);
+
+// Ergebnisse in einem Array speichern
+$results[] = array('label' => $row['name']);
+endforeach;
+
+//Produkte anzeigen
+echo json_encode($results);
+mysqli_close($db);
+
+?>
